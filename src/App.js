@@ -4,6 +4,8 @@ import './App.css';
 import Person from './Person/Person';
 import UserInput from './UserInput/UserInput';
 import UserOutput from './UserOutput/UserOutput';
+import Validation from './Validation/Validation';
+import CharBlock from './Char/Char';
 
 class App extends Component {
   state = {
@@ -14,7 +16,8 @@ class App extends Component {
     ],
     otherState: 'some other value',
     userName: 'ken chen',
-    showPersons: false
+    showPersons: false,
+    input: '',
   };
 
   deletePersonHandler = (personIndex) => {
@@ -23,6 +26,16 @@ class App extends Component {
     persons.splice(personIndex, 1);
     this.setState({persons: persons});
   };
+
+  deleteCharBlock = (charIndex) => {
+    const input = this.state.input.split('');
+
+    input.splice(charIndex, 1);
+
+    const updatedInput = input.join('');
+
+    this.setState({input: updatedInput});
+  }
 
 
   switchUserNameHandler = () => {
@@ -63,6 +76,12 @@ class App extends Component {
     });
   };
 
+  inputChangedHandler = (event) => {
+    this.setState({
+      input: event.target.value
+    });
+  };
+
   render() {
     const style = {
       backgroundColor: 'white',
@@ -74,6 +93,7 @@ class App extends Component {
 
     let persons = null;
     let first_assignment = null;
+    let chars = null;
 
     if (false) {
       first_assignment = (
@@ -92,7 +112,21 @@ class App extends Component {
           </UserInput>
         </div>
       );
-    };
+    }
+
+    chars = (
+      <div>
+        {this.state.input.split('').map((char, index) => {
+          return (
+            <CharBlock
+              text={char}
+              key={index}
+              click={() => this.deleteCharBlock(index)}
+            />
+          )
+        })}
+      </div>
+    );
 
     if (this.state.showPersons) {
       persons = (
@@ -107,7 +141,7 @@ class App extends Component {
           })}
         </div>
       );
-    };
+    }
 
     return (
       <div className="App">
@@ -118,6 +152,10 @@ class App extends Component {
           onClick={this.togglePresonsHandler}>Switch Name</button>
         {persons}
         {first_assignment}
+        <input type="text" onChange={this.inputChangedHandler} value={this.state.input}/>
+        <p style={style}>{this.state.input.length}</p>
+        <Validation length={this.state.input.length}/>
+        {chars}
       </div>
     );
   };
