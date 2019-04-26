@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 // import React, { useState } from 'react';
 import './App.css';
-import Radium, { StyleRoot } from 'radium';
 import Person from './Person/Person';
 import UserInput from './UserInput/UserInput';
 import UserOutput from './UserOutput/UserOutput';
@@ -90,11 +89,7 @@ class App extends Component {
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
+      cursor: 'pointer'
     };
 
     let persons = null;
@@ -149,10 +144,6 @@ class App extends Component {
       );
 
       style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-      }
     }
 
     const classes = [];
@@ -164,26 +155,24 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
-        <div className="App">
-          <h1>Hi, I'm a React App</h1>
-          <p className={classes.join(' ')}>This is really working!</p>
-          <button
-            style={style}
-            onClick={this.togglePresonsHandler}>Toggle Persons</button>
-          {persons}
-          {first_assignment}
-          <input type="text" onChange={this.inputChangedHandler} value={this.state.input}/>
-          <p>{this.state.input.length}</p>
-          <Validation length={this.state.input.length}/>
-          {chars}
-        </div>
-      </StyleRoot>
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <p className={classes.join(' ')}>This is really working!</p>
+        <button
+          style={style}
+          onClick={this.togglePresonsHandler}>Toggle Persons</button>
+        {persons}
+        {first_assignment}
+        <input type="text" onChange={this.inputChangedHandler} value={this.state.input}/>
+        <p>{this.state.input.length}</p>
+        <Validation length={this.state.input.length}/>
+        {chars}
+      </div>
     );
   };
 };
 
-export default Radium(App);
+export default App;
 
 // const App = props => {
 //   const [personsState, setPersonsState] = useState({
